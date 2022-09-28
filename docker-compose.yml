@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  nginx:
+    volumes:
+      - ./data/nginx-certs:/var/www/letsencrypt
+      - ./data/ssl:/etc/letsencrypt
+    build:
+      context: images/nginx
+      args:
+        - SERVER_NAME_MAIN=${SERVER_NAME_MAIN}
+    command: [nginx-debug, '-g', 'daemon off;']
+    ports:
+      - "80:80"
+
+  certbot:
+    build: images/certbot
+    tty: true
+    volumes:
+      - ./data/nginx-certs:/var/www/letsencrypt
+      - ./data/ssl:/etc/letsencrypt/live

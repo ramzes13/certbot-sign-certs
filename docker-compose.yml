@@ -19,3 +19,4 @@ services:
     volumes:
       - ./data/nginx-certs:/var/www/letsencrypt
       - ./data/ssl:/etc/letsencrypt/live
+      - ./data/archive_ssl:/etc/letsencrypt/archive

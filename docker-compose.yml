@@ -3,12 +3,9 @@ version: "3.8"
 services:
   nginx:
     volumes:
-      - ./data/nginx-certs:/var/www/letsencrypt
-      - ./data/ssl:/etc/letsencrypt
+      - ./data/shared_acme:/var/www/letsencrypt
     build:
       context: images/nginx
-      args:
-        - SERVER_NAME_MAIN=${SERVER_NAME_MAIN}
     command: [nginx-debug, '-g', 'daemon off;']
     ports:
       - "80:80"
@@ -17,6 +14,5 @@ services:
     build: images/certbot
     tty: true
     volumes:
-      - ./data/nginx-certs:/var/www/letsencrypt
-      - ./data/ssl:/etc/letsencrypt/live
+      - ./data/shared_acme:/var/www/letsencrypt
       - ./data/archive_ssl:/etc/letsencrypt/archive
